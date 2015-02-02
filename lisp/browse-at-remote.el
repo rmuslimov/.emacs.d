@@ -1,0 +1,1 @@
+/Users/rmuslimov/projects/browse-at-remote/browse-at-remote.el

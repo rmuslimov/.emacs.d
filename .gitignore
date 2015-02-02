@@ -1,0 +1,9 @@
+*.elc
+*~
+/.cask
+/.emacs.desktop
+/.hl-save
+/ac-comphist.dat
+/elpa
+/eshell
+/lisp/local.el
