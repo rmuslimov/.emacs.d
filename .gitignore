@@ -3,7 +3,13 @@
 /.cask
 /.emacs.desktop
 /.hl-save
+/.python-environments*
 /ac-comphist.dat
 /elpa
+/url
 /eshell
 /lisp/local.el
+
+bookmarks
+projectile.cache
+projectile-bookmarks.eld

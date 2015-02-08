@@ -65,6 +65,7 @@
 (bash-completion-setup)
 
 (setenv "BASH_ENV" "$HOME/.bashrc")
+(pyvenv-workon 'default)
 
 (global-set-key (kbd "C-.") 'next-buffer)
 (global-set-key (kbd "C-,") 'previous-buffer)
@@ -78,22 +79,11 @@
 (require 'kill-ring-ido)
 (global-set-key "\M-y" 'kill-ring-ido)
 
-(pyvenv-workon 'default)
 
 (setq history-length 250)
 
 ;; (global-set-key (kbd "C-j") 'ace-jump-mode)
 (global-set-key (kbd "C-x '") 'toggle-truncate-lines)
-
-(defcustom elpy-default-minor-modes '(eldoc-mode
-                                      yas-minor-mode
-                                      auto-complete-mode)
-  "Minor modes enabled when `elpy-mode' is enabled."
-  :group 'elpy)
-(elpy-enable)
-
-(eval-after-load "elpy-mode"
-  '(define-key standardp-mode-keymap (kbd "<M-left>") windmove-left))
 
 (setq shell-switcher-new-shell-function 'shell-switcher-make-shell)
 (shell-switcher-mode)
@@ -114,6 +104,50 @@
 
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
+
+(projectile-global-mode)
+
+(setq ag-highlight-search t)
+(global-set-key (kbd "C-c g g") 'browse-at-remote)
+
+(yas-global-mode 1)
+
+
+;; pymacs
+
+(defmacro after (mode &rest body)
+  `(eval-after-load ,mode
+     '(progn ,@body)))
+
+(after 'auto-complete
+       (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
+       (setq ac-use-menu-map t)
+       (define-key ac-menu-map "\C-n" 'ac-next)
+       (define-key ac-menu-map "\C-p" 'ac-previous))
+
+(after 'auto-complete-config
+       (ac-config-default)
+       (when (file-exists-p (expand-file-name "/Users/rmuslimov/projects/Pymacs"))
+         (ac-ropemacs-initialize)
+         (ac-ropemacs-setup)))
+
+(after 'auto-complete-autoloads
+       (autoload 'auto-complete-mode "auto-complete" "enable auto-complete-mode" t nil)
+       (add-hook 'python-mode-hook
+                 (lambda ()
+                   (require 'auto-complete-config)
+                   (add-to-list 'ac-sources 'ac-source-ropemacs)
+                   (auto-complete-mode))))
+
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+(pymacs-load "ropemacs" "rope-")
+
+
+(require 'browse-at-remote)
 
 ;; ends
 

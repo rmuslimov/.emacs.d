@@ -76,11 +76,11 @@
   (setup-fokker)
 )
 
-(defun setup-tests (projectname)
-  (interactive "sProject name: ")
-  (elpy-set-project-root (concat "~/projects/" ))
-  (pyvenv-workon projectname)
-)
+;; (defun setup-tests (projectname)
+;;   (interactive "sProject name: ")
+;;   (elpy-set-project-root (concat "~/projects/" ))
+;;   (pyvenv-workon projectname)
+;; )
 
 ;; open external links
 

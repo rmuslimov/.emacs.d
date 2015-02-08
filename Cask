@@ -1,6 +1,7 @@
 (source gnu)
 (source melpa)
 
+(depends-on "ag")
 (depends-on "autopair")
 (depends-on "bash-completion")
 (depends-on "elpy")
@@ -20,6 +21,9 @@
 (depends-on "pyvenv")
 (depends-on "shell-switcher")
 (depends-on "yasnippet")
+(depends-on "browse-at-remote")
+(depends-on "swap-buffers")
+(depends-on "projectile")
 
 (depends-on "color-theme")
 (depends-on "cyberpunk-theme")
