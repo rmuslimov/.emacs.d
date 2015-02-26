@@ -27,7 +27,7 @@
 ;;;;;;;;;; -----------
 
 (defun local/compile (filename method)
-  "run "
+  "run testing command"
   (let* (
         (cmd_cd (format "cd %s" (rope-get-project-root)))
         (cmd_run (if method (format "nosetests %s:%s" filename method)
@@ -47,15 +47,16 @@
 (defun local/do-python-test()
   "Run tests for function at point"
   (interactive)
-
   (let
       ((filename (f-relative (buffer-file-name) (rope-get-project-root)))
        (method (python-info-current-defun)))
     (local/compile (s-replace "" "" filename) method)))
 
 (require 'bind-key)
-(bind-keys :map python-mode-map
-           ((kbd "M-t") . local/do-python-test))
+
+(add-hook 'python-mode-hook (lambda ()
+		  (bind-keys :map python-mode-map
+					 ((kbd "M-t") . local/do-python-test))))
 
 
 (provide 'mypython)
