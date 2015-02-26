@@ -1,4 +1,4 @@
-(server-start)
+`(server-start)
 
 (setenv "WORKON_HOME" "~/envs")
 
@@ -29,8 +29,6 @@
 ;; (desktop-save-mode t)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-(setq tramp-default-method "scp")
 
 (global-set-key "\M-sr" 'replace-string)
 (global-set-key "\C-cs" 'shell)
@@ -153,6 +151,14 @@
   (interactive)
   (let ((sort-fold-case t))
     (call-interactively 'sort-lines)))
+
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+;; powerline as VIM
+(require 'powerline)
+(powerline-default-theme)
+
+(require 'moe-theme)
 
 ;; ends
 
