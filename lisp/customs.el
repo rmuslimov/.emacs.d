@@ -1,4 +1,4 @@
-`(server-start)
+(server-start)
 
 (setenv "WORKON_HOME" "~/envs")
 
