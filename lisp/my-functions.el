@@ -1,3 +1,16 @@
+(defconst getgoing/projects
+  (list "airborne" "bowman" "cessna" "fokker" "fasttrace"))
+
+(defun getgoing/get-project-path (project)
+  (f-join "~/projects" project))
+
+(defun init-shell-for (project)
+  (interactive "sProject: ")
+  (get-buffer-create (format "shell-%s" project))
+  (insert (getgoing/get-project-path project))
+  (insert (format "workon %s" project))
+  (comint-send-input nil t))
+
 (defun setup-airborne()
   (interactive)
   (shell-switcher-new-shell)

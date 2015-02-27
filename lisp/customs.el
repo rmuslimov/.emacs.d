@@ -1,7 +1,5 @@
 (server-start)
 
-(setenv "WORKON_HOME" "~/envs")
-
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
 (setq ns-function-modifier 'hyper)
@@ -26,7 +24,6 @@
 (setq inhibit-startup-message t)
 (setq default-tab-width 4)
 (setq x-select-enable-clipboard t)
-;; (desktop-save-mode t)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -62,9 +59,6 @@
 
 (bash-completion-setup)
 
-(setenv "BASH_ENV" "$HOME/.bashrc")
-(pyvenv-workon 'default)
-
 (global-set-key (kbd "C-.") 'next-buffer)
 (global-set-key (kbd "C-,") 'previous-buffer)
 
@@ -74,13 +68,13 @@
 
 (add-hook 'javascript-mode-hook 'linum-mode)
 
-(require 'kill-ring-ido)
-(global-set-key "\M-y" 'kill-ring-ido)
+;; (require 'kill-ring-ido)
+;; (global-set-key "\M-y" 'kill-ring-ido)
+(global-set-key "\M-y" 'browse-kill-ring)
 
+(setq history-length 1000)
 
-(setq history-length 250)
-
-;; (global-set-key (kbd "C-j") 'ace-jump-mode)
+(global-set-key (kbd "C-j") 'ace-jump-mode)
 (global-set-key (kbd "C-x '") 'toggle-truncate-lines)
 
 (setq shell-switcher-new-shell-function 'shell-switcher-make-shell)
@@ -103,16 +97,11 @@
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
 
-(projectile-global-mode)
-
 (setq ag-highlight-search t)
-(global-set-key (kbd "C-c g g") 'browse-at-remote)
-
 (yas-global-mode 1)
 
 
 ;; pymacs
-
 (defmacro after (mode &rest body)
   `(eval-after-load ,mode
      '(progn ,@body)))
@@ -125,7 +114,7 @@
 
 (after 'auto-complete-config
        (ac-config-default)
-       (when (file-exists-p (expand-file-name "/Users/rmuslimov/projects/Pymacs"))
+       (when (file-exists-p (expand-file-name "~/projects/Pymacs"))
          (ac-ropemacs-initialize)
          (ac-ropemacs-setup)))
 
@@ -142,10 +131,8 @@
 (autoload 'pymacs-eval "pymacs" nil t)
 (autoload 'pymacs-exec "pymacs" nil t)
 (autoload 'pymacs-load "pymacs" nil t)
+(getenv "PATH")
 (pymacs-load "ropemacs" "rope-")
-
-
-(require 'browse-at-remote)
 
 (defun sort-lines-nocase ()
   (interactive)
@@ -159,6 +146,12 @@
 (powerline-default-theme)
 
 (require 'moe-theme)
+
+(require 'flycheck-local-flake8)
+(add-hook 'flycheck-before-syntax-check-hook
+          #'flycheck-local-flake8/flycheck-virtualenv-set-python-executables 'local)
+
+(setq flycheck-check-syntax-automatically '(mode-enabled save))
 
 ;; ends
 

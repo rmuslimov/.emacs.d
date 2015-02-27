@@ -1,0 +1,1 @@
+/Users/rmuslimov/projects/flycheck-local-flake8/flycheck-local-flake8.el
