@@ -11,6 +11,7 @@
 
 (require 'customs)
 (require 'mypython)
+(require 'myclojure)
 (require 'my-functions)
 (require 'prodigy-settings)
 (require 'local)

@@ -153,6 +153,9 @@
 
 (setq flycheck-check-syntax-automatically '(mode-enabled save))
 
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
+
 ;; ends
 
 (provide 'customs)
