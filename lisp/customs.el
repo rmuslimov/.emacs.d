@@ -33,7 +33,7 @@
 
 (set-default-font "Consolas-11")
 (set-fontset-font "fontset-default" 'cyrillic '("consolas" . "utf-8"))
-(set-face-attribute 'default nil :height 135)
+(set-face-attribute 'default nil :height 125)
 
 (global-set-key (kbd "C-x m") 'magit-status)
 (global-set-key (kbd "C-x l") 'pianobar-next-song)

@@ -11,6 +11,7 @@
 (depends-on "browse-kill-ring+")
 (depends-on "cask")
 (depends-on "cider")
+(depends-on "cider-profile")
 (depends-on "codesearch")
 (depends-on "color-theme")
 (depends-on "company")

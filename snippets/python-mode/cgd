@@ -1,0 +1,10 @@
+# -*- coding: utf-8 -*-
+# name: cgd
+# --
+#! coding: utf-8
+"""
+
+@date: `(format-time-string "%d.%m.%Y")`
+@copyright (c) `(format-time-string "%Y")` GetGoing Inc.
+
+"""

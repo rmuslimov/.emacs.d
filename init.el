@@ -14,7 +14,7 @@
 (require 'myclojure)
 (require 'my-functions)
 (require 'prodigy-settings)
-(require 'local)
+;; (require 'local)
 
 (load-theme 'tango)
 

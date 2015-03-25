@@ -144,4 +144,8 @@ BEG and END (region to sort)."
 (setq org-todo-keywords
       '((sequence "TODO" "FEEDBACK" "VERIFY" "|" "DONE")))
 
+
+(setq yas-snippet-dirs (append yas-snippet-dirs
+                               '("~/.emacs.d/snippets")))
+
 (provide 'my-functions)
