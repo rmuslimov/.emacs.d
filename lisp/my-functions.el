@@ -148,4 +148,16 @@ BEG and END (region to sort)."
 (setq yas-snippet-dirs (append yas-snippet-dirs
                                '("~/.emacs.d/snippets")))
 
+
+(defun resort-region ()
+  (interactive)
+  (let* (
+         (selected (buffer-substring-no-properties (region-beginning) (region-end)))
+         (parents (-map 's-trim (s-split "," selected)))
+         (response (s-join ", " (-sort 'string< parents)))
+         )
+    (delete-region (region-beginning) (region-end))
+    (insert response)
+    ))
+
 (provide 'my-functions)

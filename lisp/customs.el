@@ -156,6 +156,9 @@
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
+(powerline-moe-theme)
+(load-theme 'whiteboard)
+
 ;; ends
 
 (provide 'customs)
