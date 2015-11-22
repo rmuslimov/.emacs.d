@@ -12,7 +12,4 @@
   (s-repeat (length package_name) "=")
   ))
 `
-@date: `(format-time-string "%d.%m.%Y")`
-@copyright (c) `(format-time-string "%Y")` GetGoing Inc.
-
 """

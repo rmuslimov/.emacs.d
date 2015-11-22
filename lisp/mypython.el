@@ -33,6 +33,9 @@
 		  (bind-keys :map python-mode-map
 					 ((kbd "M-t") . local/do-python-test))))
 
+;; (require 'py-smart-operator)
+(add-hook 'python-mode-hook 'py-smart-operator-mode)
+
 ;;  ----
 
 (provide 'mypython)

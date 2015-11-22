@@ -1,0 +1,6 @@
+* What to do next in python
+** Make sorting non-trivial lines in python
+** Open function definition from outside projects
+* In js
+** Go to definition object
+** flycheck with ESlint

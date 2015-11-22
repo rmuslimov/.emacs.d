@@ -33,7 +33,7 @@
 
 (set-default-font "Consolas-11")
 (set-fontset-font "fontset-default" 'cyrillic '("consolas" . "utf-8"))
-(set-face-attribute 'default nil :height 125)
+(set-face-attribute 'default nil :height 115)
 
 (global-set-key (kbd "C-x m") 'magit-status)
 (global-set-key (kbd "C-x l") 'pianobar-next-song)
@@ -48,8 +48,8 @@
   (yank)
   (open-line 1)
   (next-line 1)
-  (yank)
-)
+  (yank))
+
 (global-set-key (kbd "M-d") 'duplicate-line)
 
 (autoload 'pianobar "pianobar" nil t)
@@ -74,11 +74,8 @@
 
 (setq history-length 1000)
 
-(global-set-key (kbd "C-j") 'ace-jump-mode)
+(global-set-key (kbd "C-j") 'avy-goto-char)
 (global-set-key (kbd "C-x '") 'toggle-truncate-lines)
-
-(setq shell-switcher-new-shell-function 'shell-switcher-make-shell)
-(shell-switcher-mode)
 
 (hl-highlight-mode 1)
 
@@ -100,38 +97,37 @@
 (setq ag-highlight-search t)
 (yas-global-mode 1)
 
+;; ;; pymacs
+;; (defmacro after (mode &rest body)
+;;   `(eval-after-load ,mode
+;;      '(progn ,@body)))
 
-;; pymacs
-(defmacro after (mode &rest body)
-  `(eval-after-load ,mode
-     '(progn ,@body)))
+;; (after 'auto-complete
+;;        (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
+;;        (setq ac-use-menu-map t)
+;;        (define-key ac-menu-map "\C-n" 'ac-next)
+;;        (define-key ac-menu-map "\C-p" 'ac-previous))
 
-(after 'auto-complete
-       (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
-       (setq ac-use-menu-map t)
-       (define-key ac-menu-map "\C-n" 'ac-next)
-       (define-key ac-menu-map "\C-p" 'ac-previous))
+;; (after 'auto-complete-config
+;;        (ac-config-default)
+;;        (when (file-exists-p (expand-file-name "~/projects/Pymacs"))
+;;          (ac-ropemacs-initialize)
+;;          (ac-ropemacs-setup)))
 
-(after 'auto-complete-config
-       (ac-config-default)
-       (when (file-exists-p (expand-file-name "~/projects/Pymacs"))
-         (ac-ropemacs-initialize)
-         (ac-ropemacs-setup)))
-
-(after 'auto-complete-autoloads
-       (autoload 'auto-complete-mode "auto-complete" "enable auto-complete-mode" t nil)
-       (add-hook 'python-mode-hook
-                 (lambda ()
-                   (require 'auto-complete-config)
-                   (add-to-list 'ac-sources 'ac-source-ropemacs)
-                   (auto-complete-mode))))
+;; (after 'auto-complete-autoloads
+;;        (autoload 'auto-complete-mode "auto-complete" "enable auto-complete-mode" t nil)
+;;        (add-hook 'python-mode-hook
+;;                  (lambda ()
+;;                    (require 'auto-complete-config)
+;;                    (add-to-list 'ac-sources 'ac-source-ropemacs)
+;;                    (auto-complete-mode))))
 
 (autoload 'pymacs-apply "pymacs")
 (autoload 'pymacs-call "pymacs")
 (autoload 'pymacs-eval "pymacs" nil t)
 (autoload 'pymacs-exec "pymacs" nil t)
 (autoload 'pymacs-load "pymacs" nil t)
-(getenv "PATH")
+;; (getenv "PATH")
 (pymacs-load "ropemacs" "rope-")
 
 (defun sort-lines-nocase ()
@@ -139,7 +135,6 @@
   (let ((sort-fold-case t))
     (call-interactively 'sort-lines)))
 
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; powerline as VIM
 (require 'powerline)
@@ -154,11 +149,56 @@
 (setq flycheck-check-syntax-automatically '(mode-enabled save))
 
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
 (powerline-moe-theme)
 (load-theme 'whiteboard)
 
-;; ends
+(require 'py-smart-operator)
+(require 'browse-at-remote)
+(require 'itunes)
 
+(global-set-key (kbd "C-c i n") 'itunes-next)
+(global-set-key (kbd "C-c i p") 'itunes-prev)
+
+(defun grizzl-kill-ring ()
+  (interactive)
+  (let* ((index (grizzl-make-index (reverse kill-ring)))
+        (search (grizzl-completing-read "Kill-ring:" index)))
+    (insert search)
+  ))
+
+;; (global-set-key (kbd "M-y") 'grizzl-kill-ring)
+(global-set-key (kbd "M-/") 'company-complete)
+
+(define-key 'help-command (kbd "C-f") 'find-function)
+
+(add-to-list 'exec-path "/usr/local/bin")
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+
+;; setup jenkins extension
+(add-to-list 'load-path "~/projects/jenkins.el")
+(require 'jenkins)
+
+;; setup webpack extension
+(add-to-list 'load-path "~/projects/webpack.el")
+(require 'webpack)
+
+(add-hook
+ #'jsx-mode-hook
+ (lambda ()
+   (local-set-key "\C-cg" 'webpack-goto-definition)))
+
+(setq jenkins-api-token "9325efbdcfacd26d5eacfcc90b557862")
+(setq jenkins-url "http://jenkins.team.getgoing.com:80/")
+(setq jenkins-username "rmuslimov")
+(setq jenkins-viewname "0.%20Active")
+
+(add-hook 'after-init-hook 'global-company-mode)
+(setq company-backends '(company-elisp company-ropemacs))
+
+(avy-setup-default)
+
+;; ends
 (provide 'customs)

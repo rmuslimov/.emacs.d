@@ -1,0 +1,1 @@
+/Users/rmuslimov/projects/py-smart-operator/py-smart-operator.el
