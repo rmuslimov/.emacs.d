@@ -1,10 +1,13 @@
 ;; Prodigy app and services
-
 (defconst prodigy-python-apps
-  '(airborne bowman cessna fokker fasttrace))
+  '(airborne airborne-celery airborne-hyattfast bowman cessna fokker fasttrace))
 
 (defconst prodigy-standard-python-service
   '((airborne :args ("manage.py" "runserver" "5000"))
+    (airborne-celery
+     :args ("manage.py" "celeryd" "-l" "info" "-c" "3" "-P" "eventlet" "-Q" "celery"))
+    (airborne-hyattfast
+     :args ("manage.py" "celeryd" "-l" "info" "-c" "1" "-P" "eventlet" "-Q" "hyatt_slow_queue"))
     (bowman
      :args ("worker" "-A" "bowman.celeryconfig" "-n" "bowman_celery"
             "-Q" "bowman_celery,bowman_booking_celery" "-P" "eventlet"
@@ -25,24 +28,26 @@
 (defun prodigy-python-service-tag (appname)
   "Simple python virtualenv variables installed here."
   (let* ((appname-s (symbol-name appname))
+         (envname (car (s-split "-" appname-s)))
          (tagname (intern (format "%s-tag" appname-s))))
     (prodigy-define-tag
       :name tagname
-      :env '(("PYTHONHOME" (format "~/.virtualenvs/%s/" appname-s))
-             ("PYTHONPATH" (format "~/projects/%s/" appname-s))
-             ("VIRTUAL_ENV" (format "~/.virtualenvs/%s/" appname-s)))
+      :env '(("PYTHONHOME" (format "~/.virtualenvs/%s/" envname))
+             ("PYTHONPATH" (format "~/projects/%s/" envname))
+             ("VIRTUAL_ENV" (format "~/.virtualenvs/%s/" envname)))
       )))
 
 (defun prodigy-python-service-example (appname)
   (let* ((appname-s (symbol-name appname))
+         (envname (car (s-split "-" appname-s)))
          (tagname (intern (format "%s-tag" appname-s)))
          (override (cdr (assoc appname prodigy-standard-python-service))))
   (prodigy-define-service
     :name (s-capitalize appname-s)
     :command (or (plist-get override :command) "python")
     :args (plist-get override :args)
-    :path (format "~/.virtualenvs/%s/bin" appname-s)
-    :cwd (format "~/projects/%s/" appname-s)
+    :path (format "~/.virtualenvs/%s/bin" envname)
+    :cwd (format "~/projects/%s/" envname)
     :tags `(work ,appname)
     :kill-signal 'sigkill
     )))
@@ -58,7 +63,7 @@
 (prodigy-define-service
   :name "Memcached"
   :command "/usr/local/bin/memcached"
-  :args '("-I" "1M")
+  :args '("-I" "20M")
   :cwd "~"
   :tags '(work)
   :kill-signal 'sigkill)

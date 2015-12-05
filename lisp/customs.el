@@ -25,6 +25,8 @@
 (setq default-tab-width 4)
 (setq x-select-enable-clipboard t)
 
+(setq jsx-indent-level 4)
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (global-set-key "\M-sr" 'replace-string)
@@ -33,7 +35,7 @@
 
 (set-default-font "Consolas-11")
 (set-fontset-font "fontset-default" 'cyrillic '("consolas" . "utf-8"))
-(set-face-attribute 'default nil :height 115)
+(set-face-attribute 'default nil :height 135)
 
 (global-set-key (kbd "C-x m") 'magit-status)
 (global-set-key (kbd "C-x l") 'pianobar-next-song)
@@ -153,7 +155,7 @@
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
 (powerline-moe-theme)
-(load-theme 'whiteboard)
+;; (load-theme 'whiteboard)
 
 (require 'py-smart-operator)
 (require 'browse-at-remote)
@@ -199,6 +201,7 @@
 (setq company-backends '(company-elisp company-ropemacs))
 
 (avy-setup-default)
+;; (load-theme 'tango-dark)
 
 ;; ends
 (provide 'customs)
